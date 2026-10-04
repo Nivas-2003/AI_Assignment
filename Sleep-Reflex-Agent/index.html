@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Sleep Reflex Agent</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- Header -->
+
+    <header>
+
+        <h1>🌙 Sleep Reflex Agent</h1>
+
+        <p>
+            Analyze your sleeping pattern and
+            estimate your sleep quality score.
+        </p>
+
+    </header>
+
+
+    <!-- Main -->
+
+    <main>
+
+
+        <!-- Input -->
+
+        <section class="input-card">
+
+            <h2>Enter Your Sleep Pattern</h2>
+
+
+            <div class="input-group">
+
+                <label for="bedtime">
+                    Bedtime
+                </label>
+
+                <input
+                    type="time"
+                    id="bedtime"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="wakeTime">
+                    Wake-up Time
+                </label>
+
+                <input
+                    type="time"
+                    id="wakeTime"
+                    required
+                >
+
+            </div>
+
+
+            <button onclick="analyzeSleep()">
+                Analyze Sleep
+            </button>
+
+
+            <div class="agent-info">
+
+                <h3>How the agent works</h3>
+
+                <p>
+                    The reflex agent analyzes sleep duration
+                    using rules derived from the sleep dataset.
+                    Bedtime is then used as a secondary factor
+                    to adjust the score.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Results -->
+
+        <section class="result-card">
+
+            <h2>Sleep Quality</h2>
+
+
+            <div class="score">
+
+                <span id="score">
+                    --
+                </span>
+
+                <span class="score-max">
+                    /100
+                </span>
+
+            </div>
+
+
+            <h3 id="category">
+                Enter your sleep time
+            </h3>
+
+
+            <!-- Sleep Details -->
+
+            <div class="details">
+
+                <p>
+                    <strong>Bedtime:</strong>
+                    <span id="displayBedtime">--</span>
+                </p>
+
+                <p>
+                    <strong>Wake-up:</strong>
+                    <span id="displayWakeTime">--</span>
+                </p>
+
+                <p>
+                    <strong>Sleep Duration:</strong>
+                    <span id="duration">--</span>
+                </p>
+
+            </div>
+
+
+            <!-- Agent Analysis -->
+
+            <div class="analysis">
+
+                <h3>Agent Analysis</h3>
+
+
+                <p>
+                    <strong>Sleep Duration:</strong>
+                    <span id="durationAnalysis">
+                        --
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>Bedtime:</strong>
+                    <span id="bedtimeAnalysis">
+                        --
+                    </span>
+                </p>
+
+            </div>
+
+
+            <!-- Recommendation -->
+
+            <div class="advice">
+
+                <h3>Recommendation</h3>
+
+                <p id="advice">
+
+                    Enter your bedtime and wake-up time
+                    to analyze your sleep pattern.
+
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Disclaimer -->
+
+    <div class="disclaimer">
+
+        <strong>Note:</strong>
+
+        This project provides an educational
+        sleep-quality estimate based on dataset-derived
+        rules. It is not a medical diagnostic tool.
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+            Sleep Reflex Agent
+        </p>
+
+        <p>
+            Dataset-Based Rule-Based AI Project
+        </p>
+
+    </footer>
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

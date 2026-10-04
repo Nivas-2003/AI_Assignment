@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Indian Route Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Indian Route Search</h1>
+    <p class="subtitle">Finding a route using Uniform Cost Search</p>
+
+    <div class="box">
+        <label>Starting City:</label>
+        <select id="start">
+            {% for city in cities %}
+            <option value="{{ city }}" {% if city == "Hyderabad" %}selected{% endif %}>{{ city }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Destination City:</label>
+        <select id="goal">
+            {% for city in cities %}
+            <option value="{{ city }}" {% if city == "Delhi" %}selected{% endif %}>{{ city }}</option>
+            {% endfor %}
+        </select>
+
+        <button onclick="findRoute()">Find Route</button>
+    </div>
+
+    <div id="error" class="error"></div>
+
+    <div id="result" class="box" style="display:none;">
+        <h2>Result</h2>
+        <p><b>Route:</b></p>
+        <p id="route" class="route"></p>
+        <p><b>Total Distance:</b> <span id="distance"></span> km</p>
+        <p><b>Algorithm:</b> Uniform Cost Search</p>
+        <p><b>Cities Expanded:</b> <span id="expandedCount"></span></p>
+    </div>
+
+    <div class="box">
+        <h2>Search Process</h2>
+        <p>Uniform Cost Search expands the city with the lowest total distance from the starting city.</p>
+        <table>
+            <thead>
+                <tr><th>Order</th><th>City</th><th>Cost (km)</th></tr>
+            </thead>
+            <tbody id="expandedList"></tbody>
+        </table>
+    </div>
+
+    <div class="box">
+        <h2>About the Project</h2>
+        <p>Major Indian cities are represented as nodes in a weighted graph. Roads are edges and approximate road distances are used as costs.</p>
+        <p>The objective is to find a route between two cities with minimum total road distance.</p>
+    </div>
+
+    <p class="note">Note: Distances are approximate values used for demonstrating the AI search algorithm.</p>
+</div>
+
+<script>
+async function findRoute() {
+    const start = document.getElementById("start").value;
+    const goal = document.getElementById("goal").value;
+    const error = document.getElementById("error");
+    error.textContent = "";
+
+    try {
+        const response = await fetch("/api/search", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({start: start, goal: goal})
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            error.textContent = data.error;
+            return;
+        }
+
+        document.getElementById("result").style.display = "block";
+        document.getElementById("route").textContent = data.path.join(" -> ");
+        document.getElementById("distance").textContent = data.distance;
+        document.getElementById("expandedCount").textContent = data.expanded.length;
+
+        const table = document.getElementById("expandedList");
+        table.innerHTML = "";
+
+        data.expanded.forEach((item, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML =
+                "<td>" + (index + 1) + "</td>" +
+                "<td>" + item.city + "</td>" +
+                "<td>" + item.cost + "</td>";
+            table.appendChild(row);
+        });
+    } catch (err) {
+        error.textContent = "Unable to connect to the Flask server.";
+    }
+}
+</script>
+</body>
+</html>
